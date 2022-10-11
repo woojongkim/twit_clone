@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="card">
+      <div class="card-header">
+        <h4>회원 가입</h4>
+      </div>
+      <div class="card-body">
+        <form class=".needs-validation col-sm-13" th:action="@{/signup}" th:object="${signUpDto}"
+              method="post">
+          <div class="form-group">
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" th:field="*{nickname}" class="form-control"/>
+          </div>
+          <small id="nicknameHelp" class="form-text text-muted">
+            공백없이 문자와 숫자로만 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
+          </small>
+          <small class="invalid-feedback">닉네임을 입력하세요.</small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('nickname')}"
+                 th:errors="*{nickname}">Nickname Error</small>
+
+          <div class="form-group">
+            <label for="nickname">@URL</label>
+            <input type="text" id="url" th:field="*{url}" class="form-control"/>
+          </div>
+          <small id="urlHelp" class="form-text text-muted">
+            개인페이지로 접속할 @태그 url입니다.
+          </small>
+          <small class="invalid-feedback">URL을 입력하세요.</small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('url')}"
+                 th:errors="*{url}">url Error</small>
+
+          <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" th:field="*{email}" class="form-control"/>
+          </div>
+          <small class="invalid-feedback">EMAIL을 입력하세요.</small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}"
+                 th:errors="*{email}">url Error</small>
+
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control"/>
+          </div>
+          <small class="invalid-feedback">비밀번호를 입력하세요.</small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}"
+                 th:errors="*{password}">url Error</small>
+
+          <div class="form-group">
+            <button class="btn btn-primary btn-block" type="submit"
+                    aria-describedby="submitHelp">가입하기
+            </button>
+            <small id="submitHelp" class="form-text text-muted">
+              <a href="#">약관</a>에 동의하시면 가입하기 버튼을 클릭하세요.
+            </small>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
