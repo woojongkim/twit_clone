@@ -54,7 +54,7 @@ public class UserController {
   }
 
   @GetMapping("/login")
-  public String login(){
+  public String loginForm(){
     return "user/login";
   }
 
@@ -75,8 +75,7 @@ public class UserController {
 
     user.completeSignUp();
 
-    UserDto userDto = modelMapper.map(user, UserDto.class);
-    model.addAttribute(userDto);
+//    userService.login(user);
 
     return view;
   }

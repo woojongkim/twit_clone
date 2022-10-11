@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="card">
+      <div class="card-header">
+        <h4>로그인</h4>
+      </div>
+      <div class="card-body">
+        <form class=".needs-validation col-sm-13" th:action="@{/login}" method="post">
+          <div class="form-group">
+            <label for="username">닉네임 혹은 이메일</label>
+            <input type="text" id="username" name="username" class="form-control" aria-describedby="usernameHelp"
+                   required/>
+          </div>
+          <small id="usernameHelp" class="form-text text-muted">
+            닉네임 혹은 이메일주소를 입력하세요.
+          </small>
+
+          <div class="my-1 form-group">
+            <label for="password">패스워드</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+          </div>
+
+          <div class="my-1 form-group">
+            <button class="btn btn-primary btn-block" type="submit"
+                    aria-describedby="submitHelp">로그인
+            </button>
+          </div>
+
+          <div class="mt-1 alert alert-danger" th:if="${param.error}">
+            <p>이메일(또는 닉네임)과 패스워드가 정확하지 않습니다.</p>
+            <p>또는 확인되지 않은 이메일을 사용했습니다. 이메일을 확인해 주세요.</p>
+            <p>
+              확인 후 다시 입력하시거나, <a href="#" th:href="@{/find-passsword}">패스워드 찾기</a>를 이용하세요.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

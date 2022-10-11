@@ -23,11 +23,15 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
     http.authorizeRequests()
-        .antMatchers("/", "/signup","/email-confirm").permitAll()
+        .antMatchers("/", "/signup", "/email-confirm","/login").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin()
-        .loginPage("/login").permitAll();
+        .loginPage("/login")
+        .defaultSuccessUrl("/");
+
+    http.logout()
+        .logoutSuccessUrl("/");
 
     return http.build();
   }

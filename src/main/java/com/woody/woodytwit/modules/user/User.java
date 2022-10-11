@@ -33,7 +33,7 @@ public class User {
   private String email;
 
   @Column(unique = true)
-  private String url;
+  private String username;
 
   private String nickname;
 

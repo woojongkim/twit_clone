@@ -24,15 +24,15 @@
                  th:errors="*{nickname}">Nickname Error</small>
 
           <div class="form-group">
-            <label for="nickname">@URL</label>
-            <input type="text" id="url" th:field="*{url}" class="form-control"/>
+            <label for="username">사용자 아이디</label>
+            <input type="text" id="username" th:field="*{username}" class="form-control"/>
           </div>
-          <small id="urlHelp" class="form-text text-muted">
-            개인페이지로 접속할 @태그 url입니다.
+          <small id="usernameHelp" class="form-text text-muted">
+            @사용자아이디
           </small>
-          <small class="invalid-feedback">URL을 입력하세요.</small>
-          <small class="form-text text-danger" th:if="${#fields.hasErrors('url')}"
-                 th:errors="*{url}">url Error</small>
+          <small class="invalid-feedback">사용자 아이디를 입력하세요.</small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('username')}"
+                 th:errors="*{username}">username error</small>
 
           <div class="form-group">
             <label for="email">이메일</label>
@@ -40,7 +40,7 @@
           </div>
           <small class="invalid-feedback">EMAIL을 입력하세요.</small>
           <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}"
-                 th:errors="*{email}">url Error</small>
+                 th:errors="*{email}">email Error</small>
 
           <div class="form-group">
             <label for="password">비밀번호</label>
@@ -48,7 +48,7 @@
           </div>
           <small class="invalid-feedback">비밀번호를 입력하세요.</small>
           <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}"
-                 th:errors="*{password}">url Error</small>
+                 th:errors="*{password}">password Error</small>
 
           <div class="form-group">
             <button class="btn btn-primary btn-block" type="submit"

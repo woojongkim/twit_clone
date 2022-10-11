@@ -18,7 +18,7 @@ public class SignUpDto {
   @NotBlank
   @Length(min = 3, max = 20)
   @Pattern(regexp = "^[A-Za-z0-9_-]{3,20}$", message = "영문자,숫자,-,_만 사용가능합니다.")
-  private String url;
+  private String username;
 
   @NotBlank
   @Length(min = 3, max = 20)

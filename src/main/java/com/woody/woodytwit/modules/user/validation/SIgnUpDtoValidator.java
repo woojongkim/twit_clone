@@ -28,14 +28,9 @@ public class SIgnUpDtoValidator implements Validator {
           "이미 사용중인 이메일입니다.");
     }
 
-    if (userRepository.existsByNickname(signUpDto.getNickname())) {
-      errors.rejectValue("nickname", "invalid.nickname", new Object[]{signUpDto.getEmail()},
-          "이미 사용중인 닉네임입니다.");
-    }
-
-    if (userRepository.existsByUrl(signUpDto.getUrl())) {
-      errors.rejectValue("url", "invalid.url", new Object[]{signUpDto.getUrl()},
-          "이미 사용중인 태그입니다.");
+    if (userRepository.existsByUsername(signUpDto.getUsername())) {
+      errors.rejectValue("username", "invalid.username", new Object[]{signUpDto.getUsername()},
+          "이미 사용중인 사용자 아이디입니다.");
     }
   }
 }
