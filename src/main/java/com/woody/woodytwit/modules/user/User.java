@@ -1,11 +1,18 @@
 package com.woody.woodytwit.modules.user;
 
+import com.woody.woodytwit.modules.user.dto.ProfileUpdateDto;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,13 +23,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tuser")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "tuser")
 public class User {
 
   @Id
@@ -47,8 +54,17 @@ public class User {
 
   private LocalDateTime joinedDate;
 
+  private String description;
+
+  @Lob
+  @Basic(fetch = FetchType.EAGER)
+  private String backgroundImage;
+
+  @Lob @Basic(fetch = FetchType.EAGER)
+  private String profileImage;
+
   public void generateEmailCheckToken() {
-    this.emailCheckToken = UUID.randomUUID().toString();
+    this.emailCheckToken = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
     this.emailCheckTokenGeneratedDate = LocalDateTime.now();
   }
 
@@ -64,4 +80,5 @@ public class User {
   public boolean canSendConfirmEmail() {
     return this.emailCheckTokenGeneratedDate.isBefore(LocalDateTime.now().minusHours(1));
   }
+
 }
