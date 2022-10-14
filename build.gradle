@@ -42,6 +42,10 @@ dependencies {
 
     testImplementation 'org.testcontainers:postgresql:1.17.4'
 
+    testRuntimeOnly 'com.h2database:h2'
+
+
+
 }
 
 tasks.named('test') {
