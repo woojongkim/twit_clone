@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="fragments.html :: head"></head>
+<style>
+
+
+</style>
+<body scroll="no">
+<div class="wrapper">
+  <header th:replace="fragments.html :: sidebar"></header>
+  <main class="main">
+    <div class="card">
+      <div class="card-header">
+        <h4>프로필 수정</h4>
+      </div>
+
+      <div class="card-body">
+        <form class=".needs-validation col-sm-13" th:action="@{/settings/profile}"
+              th:object="${profileUpdateDto}" method="post">
+          <div id="new-background-image" class="mt-3"></div>
+          <div class="form-group">
+            <div class="mt-3">
+              <div id="current-background-image" style="height:150px; width: 100%; background-color: #1e1e1e">
+                <img style="width: 100%; height:150px; object-fit: fill;"
+                     th:if="${!#strings.isEmpty(profileUpdateDto.backgroundImage)}" th:src="${profileUpdateDto.backgroundImage}">
+              </div>
+              <img style="width: 100%; height:150px; object-fit: fill; display: none"
+                   id="cropped-new-background-image" class="mt-3"></img>
+            </div>
+            <div class="custom-file">
+              <label class="custom-file-label" for="background-image-file">배경 이미지 변경</label>
+              <input type="file" class="custom-file-input" id="background-image-file">
+            </div>
+            <div id="new-background-image-control" class="mt-3">
+              <button type="button" class="btn btn-outline-success btn-block" id="background-confirm-button">
+                확인
+              </button>
+              <button type="button" class="btn btn-outline-warning btn-block" id="background-reset-button">취소
+              </button>
+            </div>
+          </div>
+
+          <input id="backgroundImage" type="hidden" th:field="*{backgroundImage}"/>
+
+          <div id="new-profile-image" class="mt-3"></div>
+          <div class="form-group">
+            <div class="circular--portrait" style="border: solid">
+              <img id="current-profile-image" th:src="${profileUpdateDto.profileImage}"/>
+              <img id="cropped-profile-image" style="display: none"/>
+            </div>
+            <div class="custom-file">
+              <label class="custom-file-label" for="profile-image-file">프로필 이미지 변경</label>
+              <input type="file" class="custom-file-input" id="profile-image-file">
+            </div>
+            <div id="new-profile-image-control" class="mt-3">
+              <button type="button" class="btn btn-outline-success btn-block" id="profile-confirm-button">
+                확인
+              </button>
+              <button type="button" class="btn btn-outline-warning btn-block" id="profile-reset-button">취소
+              </button>
+            </div>
+          </div>
+
+          <input id="profileImage" type="hidden" th:field="*{profileImage}"/>
+
+          <div class="form-group">
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" th:field="*{nickname}" class="form-control"/>
+          </div>
+          <small id="nicknameHelp" class="form-text text-muted">
+            공백없이 문자와 숫자로만 3자 이상 20자 이내로 입력하세요.
+          </small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('nickname')}"
+                 th:errors="*{nickname}">Nickname Error</small>
+
+          <div class="form-group">
+            <label for="description">자기소개</label>
+            <input type="text" id="description" th:field="*{description}" class="form-control"/>
+          </div>
+          </small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('description')}"
+                 th:errors="*{description}">description Error</small>
+
+          <div class="form-group">
+            <button class="btn btn-primary btn-block" type="submit"
+                    aria-describedby="submitHelp">저장
+            </button>
+            </small>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
+      integrity="sha512-0SPWAwpC/17yYyZ/4HSllgaK7/gg9OlVozq8K7rf3J8LvCjYEEIfzzpnA2/SSjpGIunCSD18r3UhvDcu/xncWA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"
+        integrity="sha512-ooSWpxJsiXe6t4+PPjCgYmVfr1NS5QXJACcR/FPpsdm6kqG1FmQ2SVyg2RXeVuCRBLr0lWHnWJP6Zs1Efvxzww=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  // body on load not using jquery
+  document.addEventListener("DOMContentLoaded", function (event) {
+    // profile image
+    const backgroundImageInput = document.getElementById('backgroundImage');
+    const currentBackgroundImage = document.getElementById('current-background-image');
+    const backgroundImageFile = document.getElementById('background-image-file');
+    const newBackgroundImage = document.getElementById('new-background-image');
+    const newBackgroundImageControl = document.getElementById('new-background-image-control');
+    const croppedNewBackgroundImage = document.getElementById('cropped-new-background-image');
+    const backgroundConfirmButton = document.getElementById('background-confirm-button');
+    const backgroundResetButton = document.getElementById('background-reset-button');
+
+    newBackgroundImageControl.style.display = 'none';
+
+    // profile image
+    backgroundImageFile.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        if (!e.target.result.startsWith("data:image")) {
+          alert("이미지 파일을 선택하세요.");
+          return;
+        }
+
+        let img = document.createElement("img");
+        img.id = 'new-background-image';
+        img.src = e.target.result;
+        img.style.maxWidth = '100%';
+        img.style.display = 'block';
+        // img.setAttribute('height', '200px');
+        newBackgroundImage.innerHTML = '';
+        newBackgroundImage.appendChild(img);
+
+        newBackgroundImageControl.style.display = 'block';
+
+        const cropper = new Cropper(img, {
+          aspectRatio: 1024 / 200,
+          viewMode: 1,
+          dragMode: 'move',
+          autoCropArea: 0.8,
+          restore: true,
+          guides: true,
+          center: true,
+          highlight: true,
+          cropBoxMovable: false,
+          cropBoxResizable: false,
+          minCanvasHeight: 150,
+          toggleDragModeOnDblclick: false,
+        });
+        backgroundConfirmButton.style.display = 'block';
+        backgroundResetButton.style.display = 'block';
+
+        backgroundConfirmButton.addEventListener('click', function (event) {
+          const canvas = cropper.getCroppedCanvas();
+          const dataUrl = cropper.getCroppedCanvas().toDataURL();
+          backgroundImageInput.value = dataUrl;
+          croppedNewBackgroundImage.src = dataUrl;
+          croppedNewBackgroundImage.style.display = 'block';
+          currentBackgroundImage.style.display = 'none';
+          newBackgroundImageControl.style.display = 'none';
+          newBackgroundImage.innerHTML = '';
+          cropper.destroy();
+        });
+        backgroundResetButton.addEventListener('click', function (event) {
+          currentBackgroundImage.style.display = 'block';
+          newBackgroundImageControl.style.display = 'none';
+          newBackgroundImage.innerHTML = '';
+          backgroundImageFile.innerHTML = '';
+          cropper.destroy();
+        });
+
+      };
+      reader.readAsDataURL(file);
+    });
+
+    const profileImageInput = document.getElementById('profileImage');
+    const currentProfileImage = document.getElementById('current-profile-image');
+    const profileImageFile = document.getElementById('profile-image-file');
+    const newProfileImage = document.getElementById('new-profile-image');
+    const newProfileImageControl = document.getElementById('new-profile-image-control');
+    const croppedNewProfileImage = document.getElementById('cropped-profile-image');
+    const profileConfirmButton = document.getElementById('profile-confirm-button');
+    const profileResetButton = document.getElementById('profile-reset-button');
+
+    newProfileImageControl.style.display = 'none';
+
+    profileImageFile.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        if (!e.target.result.startsWith("data:image")) {
+          alert("이미지 파일을 선택하세요.");
+          return;
+        }
+
+        let img = document.createElement("img");
+        img.id = 'new-background-image';
+        img.src = e.target.result;
+        // img.setAttribute('height', '200px');
+        newProfileImage.innerHTML = '';
+        newProfileImage.appendChild(img);
+
+        newProfileImageControl.style.display = 'block';
+
+        const cropper = new Cropper(img, {
+          aspectRatio: 1 / 1,
+          viewMode: 1,
+          dragMode: 'move',
+          autoCropArea: 0.5,
+          restore: true,
+          guides: true,
+          center: true,
+          highlight: true,
+          cropBoxMovable: false,
+          cropBoxResizable: false,
+          minCanvasHeight: 150,
+          toggleDragModeOnDblclick: false,
+        });
+
+
+        profileConfirmButton.addEventListener('click', function (event) {
+          const canvas = cropper.getCroppedCanvas();
+          const dataUrl = cropper.getCroppedCanvas().toDataURL();
+          profileImageInput.value = dataUrl;
+          croppedNewProfileImage.src = dataUrl;
+          croppedNewProfileImage.style.display = 'block';
+          currentProfileImage.style.display = 'none';
+          newProfileImageControl.style.display = 'none';
+          newProfileImage.innerHTML = '';
+          cropper.destroy();
+        });
+        backgroundResetButton.addEventListener('click', function (event) {
+          currentProfileImage.style.display = 'block';
+          newProfileImageControl.style.display = 'none';
+          newProfileImage.innerHTML = '';
+          profileImageFile.innerHTML = '';
+          cropper.destroy();
+        });
+
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+</script>
+
+</body>
+</html>

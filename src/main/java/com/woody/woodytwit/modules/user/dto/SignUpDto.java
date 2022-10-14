@@ -16,12 +16,12 @@ import org.hibernate.validator.constraints.Length;
 public class SignUpDto {
 
   @NotBlank
-  @Length(min = 3, max = 20)
+  @Length(min = 1, max = 20)
   @Pattern(regexp = "^[A-Za-z0-9_-]{3,20}$", message = "영문자,숫자,-,_만 사용가능합니다.")
   private String username;
 
   @NotBlank
-  @Length(min = 3, max = 20)
+  @Length(min = 1, max = 20)
   @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9_-]{3,20}$", message = "특수문자는 사용불가합니다.")
   private String nickname;
 
