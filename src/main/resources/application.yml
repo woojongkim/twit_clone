@@ -1,13 +1,20 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: auto_woody
+    password: woody
+
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+
   thymeleaf:
     cache: false
+
   devtools:
     livereload:
       enabled: true
@@ -17,7 +24,7 @@ logging:
     org:
       hibernate:
         SQL: debug
-        type:
-          descriptor:
-            sql:
-              BasicBinder: trace
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: trace
