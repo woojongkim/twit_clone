@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="fragments.html :: head"></head>
+<style>
+
+
+</style>
+<body scroll="no">
+<div class="wrapper">
+  <header th:replace="fragments.html :: sidebar"></header>
+  <main class="main">
+
+    <div th:if="${user != null}">
+      <div style="height:150px; width: 100%; background-color: #1e1e1e">
+        <img th:if="${!#strings.isEmpty(user.backgroundImage)}" th:src="${user.backgroundImage}"
+             style="height: 100%; width: 100%; object-fit: fill; z-index: 1"/>
+      </div>
+      <div style="width:150px; height: 150px; min-height: 48px; margin-top: -50px; margin-left: 20px; z-index: 3;">
+        <div class="circular--portrait" style="border: solid">
+          <img th:if="${!#strings.isEmpty(user.profileImage)}" th:src="${user.profileImage}"/>
+        </div>
+      </div>
+      <div th:if="${!#strings.isEmpty(user.profileImage)}" style="height:150px; width: 100%;"
+           th:style="'background-image:url(' + ${user.profileImage} + ');'"></div>
+      <div th:text="${user.nickname}"></div>
+      <div th:text="|@${user.username}|" class="text-muted"></div>
+      <div th:text="${user.description}"></div>
+      <div th:text="|가입일 : ${#temporals.format(user.joinedDate, 'yyyy년 MM월')}|"></div>
+      <div style="display: flex; flex-direction: row; justify-content: flex-start;">
+        <span th:text="|팔로잉 : ${countFollowing}|" class="m-1"></span>
+        <span th:text="|팔로워 : ${countFollowed}|" class="m-1"></span>
+      </div>
+
+      <div th:if="${!isOwner}">
+        <form th:if="!${isFollow}" th:action="|${user.username}/follow|" method="post">
+          <button type="submit">팔로우</button>
+        </form>
+
+        <form th:if="${isFollow}" th:action="|${user.username}/unfollow|" method="post">
+          <button type="submit">언팔로우</button>
+        </form>
+      </div>
+
+      <div th:if="${isOwner}">
+        <a href="#" th:href="@{/settings/profile}">
+          <button type="button">프로필 수정</button>
+        </a>
+      </div>
+    </div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+  </main>
+</div>
+</body>
+</html>
