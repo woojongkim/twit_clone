@@ -20,22 +20,44 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.bundle.min.js"
           integrity="sha512-BOsvKbLb0dB1IVplOL9ptU1EYA+LuCKEluZWRUYG73hxqNBU85JBIBhPGwhQl7O633KtkjMv8lvxZcWP+N3V3w=="
           crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-size: calc(1rem * 1.2);
+    }
+
     .wrapper {
       width: 100%;
       height: 100%;
       display: flex;
       flex-direction: row;
+      justify-content: center;
     }
 
     .main {
-      width: 800px;
+      width: 600px;
       height: 100%;
       display: flex;
       flex-direction: column;
       margin-left: 200px;
-      border-color: rgb(47, 51, 54);
-      border-style: solid;
+      border : thin solid rgb(51, 51, 51);
+    }
+
+    .sidebar {
+      width: 200px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      align-items: flex-end;
+      justify-content: space-between
     }
 
     .circular--portrait {
@@ -51,12 +73,20 @@
       height: 100%;
     }
 
+    a {
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline #ffffff;
+    }
+
+
   </style>
 </head>
 
 <header th:fragment="sidebar" class="p-3 text-bg-dark">
-  <div
-      style="width: 200px; height:100%; display: flex; flex-direction: column; position: fixed; align-items: flex-end; justify-content: space-between">
+  <div class="sidebar">
     <ul class="nav nav-pills flex-column ">
       <li class="nav-item">
         <a href="#" class="nav-link active" aria-current="page">
@@ -108,11 +138,12 @@
            class="d-flex align-items-center text-white text-decoration-none dropdown-toggle mb-5"
            data-bs-toggle="dropdown" aria-expanded="false">
           <div class="circular--portrait" style="width: 35px; height: 35px;">
-            <img th:if="${!#strings.isEmpty(currentUser.profileImage)}" th:src="${currentUser.profileImage}"/>
+            <img th:if="${!#strings.isEmpty(currentUser.profileImage)}"
+                 th:src="${currentUser.profileImage}"/>
           </div>
           <div class="d-flex flex-column m-1">
             <strong th:text="${currentUser.nickname}">nickname</strong>
-            <small class="text-muted" th:text="|@${currentUser.username}|">@tag</small>
+            <small class="text-muted" th:text="'@' + ${currentUser.username}">@tag</small>
           </div>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">

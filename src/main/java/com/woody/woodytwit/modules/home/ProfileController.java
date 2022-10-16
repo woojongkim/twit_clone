@@ -65,4 +65,40 @@ public class ProfileController {
 
     return "user/profile";
   }
+
+  @GetMapping("/user/{username}/following")
+  public String following(@CurrentUser User user, @Valid @PathVariable("username") String username, Model model) {
+    User byUsername = userRepository.findByUsername(username);
+    if(byUsername == null){
+      throw new UsernameNotFoundException(username);
+    }
+
+    List<UserDto> collect = followRepository.findByFromUser(byUsername).stream()
+        .map(Follow::getToUser).map(u -> modelMapper.map(u, UserDto.class)).collect(
+            Collectors.toList());
+
+    model.addAttribute("mode", "following");
+    model.addAttribute("userDto", modelMapper.map(byUsername, UserDto.class));
+    model.addAttribute("following", collect);
+
+    return "user/following";
+  }
+
+  @GetMapping("/user/{username}/followers")
+  public String followers(@CurrentUser User user, @Valid @PathVariable("username") String username, Model model) {
+    User byUsername = userRepository.findByUsername(username);
+    if(byUsername == null){
+      throw new UsernameNotFoundException(username);
+    }
+
+    List<UserDto> collect = followRepository.findByToUser(byUsername).stream()
+        .map(Follow::getFromUser).map(u -> modelMapper.map(u, UserDto.class)).collect(
+            Collectors.toList());
+
+    model.addAttribute("mode", "followers");
+    model.addAttribute("userDto", modelMapper.map(byUsername, UserDto.class));
+    model.addAttribute("following", collect);
+
+    return "user/following";
+  }
 }

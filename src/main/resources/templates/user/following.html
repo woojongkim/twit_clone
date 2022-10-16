@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="fragments.html :: head"></head>
+<style>
+
+  .profile-follow-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100px;
+  }
+
+  .profile-follow-user-header{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    gap: 20px;
+    margin-left: 1rem;
+  }
+
+  .profile-follow-user-header > a > i{
+    width: 2rem;
+    height: 2rem;
+    color: white;
+
+    border-radius: 100px;
+    padding: 6px;
+
+    transition: 0.5s;
+  }
+
+  .profile-follow-user-header > a > i:hover{
+    background-color: #504e4e;
+  }
+
+  .userinfo-nickname{
+    font-size: calc(1rem * 1.2);
+  }
+
+  .userinfo-tag{
+    font-size: calc(1rem * 0.8);
+    color: darkgray;
+  }
+
+  .profile-follow-tab{
+    display: flex;
+
+
+    font-size: 1rem;
+    border-bottom: thin solid rgb(51, 51, 51);
+    letter-spacing: 0.1rem;
+  }
+
+  .profile-follow-tab > a{
+    flex: 1;
+    text-decoration: none;
+    transition: 0.5s;
+    font-weight: bold;
+    color: darkgray;
+  }
+
+  .profile-follow-tab > a .active{
+    color: white;
+    text-decoration-line: underline;
+    text-decoration-color: cornflowerblue;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0.2rem;
+  }
+
+  .profile-follow-tab > a:hover{
+    background-color: #504e4e;
+  }
+
+  .profile-follow-tab-item{
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .follow-list-container{
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .follow-card{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .follow-card-image{
+    width: 36px;
+    height: 36px;
+  }
+
+  .non-profile{
+    fill: darkgray;
+  }
+
+  .follow-card-info{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .follow-card-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .follow-card-name-tag{
+    color: darkgray;
+    font-size: 0.8rem;
+  }
+
+  .follow-card-follow-btn{
+    background-color: white;
+    color: #1e1e1e;
+    border-radius: 100px;
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .follow-card-footer{
+    font-size: 1rem;
+  }
+
+  .follow-card-name-nickname{
+    color: white;
+  }
+
+</style>
+<body>
+<div class="wrapper">
+  <header th:replace="fragments.html :: sidebar"></header>
+  <main class="main">
+    <div class="profile-follow-container">
+      <div class="profile-follow-user-header">
+        <a th:href="'/user/'+${userDto.username}">
+          <i class="bi bi-arrow-left"></i>
+        </a>
+        <div class="userinfo">
+          <div class="userinfo-nickname" th:text="${userDto.nickname}"></div>
+          <div class="userinfo-tag" th:text="'@' + ${userDto.username}"></div>
+        </div>
+      </div>
+
+      <div class="profile-follow-tab">
+        <a th:href="'/user/'+${userDto.username}+'/following'">
+          <div class="profile-follow-tab-item" th:classappend="${#strings.equals(mode,'following')? 'active':''}">팔로우</div>
+        </a>
+        <a th:href="'/user/'+${userDto.username}+'/followers'">
+          <div class="profile-follow-tab-item"  th:classappend="${#strings.equals(mode,'followers')? 'active':''}">팔로워</div>
+        </a>
+      </div>
+
+      <div class="follow-list-container" th:each="user : ${following}">
+        <div class="follow-card">
+          <div class="circular--portrait follow-card-image">
+            <a class="follow-card-name-nickname" th:href="'/user/'+${user.username}">
+              <img th:if="${!#strings.isEmpty(user.profileImage)}" th:src="${user.profileImage}" alt="">
+              <img class="non-profile" th:if="${#strings.isEmpty(user.profileImage)}" th:src="@{/icon/person-circle.svg}" alt="">
+            </a>
+          </div>
+          <div class="follow-card-info">
+            <div class="follow-card-head">
+              <div class="follow-card-name">
+                <a class="follow-card-name-nickname" th:href="'/user/'+${user.username}" th:text="${user.nickname}">닉네임
+                </a>
+                <div class="follow-card-name-tag" th:text="'@' + ${user.username}">@태그</div>
+              </div>
+              <div class="follow-card-follow">
+                <button class="follow-card-follow-btn">팔로우</button>
+              </div>
+            </div>
+
+            <div class="follow-card-footer" th:text="${user.description}">자기소개</div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+<!--    <div class="container">-->
+<!--      <div class="row justify-content-center">-->
+<!--          <div class="card">-->
+<!--            <div class="card-header">-->
+<!--              <h4>팔로잉</h4>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--              <div class="list-group" th:each="user : ${following}">-->
+<!--&lt;!&ndash;                <a href="#" class="list-group-item list-group-item-action">&ndash;&gt;-->
+<!--                  <div class="d-flex w-100 justify-content-between">-->
+<!--&lt;!&ndash;                    <div class="circular&#45;&#45;portrait" style="width:50px; height: 50px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <img th:src="${user.profileImage}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                    <h5 class="mb-1" th:text="${user.nickname}"></h5>-->
+<!--                    <small>3 days ago</small>-->
+<!--                  </div>-->
+<!--                  <small class="mb-1 text-muted" th:text="'@' + ${user.username}">@Tag</small>-->
+<!--                  <p th:text="${user.description}">자기소개</p>-->
+<!--&lt;!&ndash;                </a>&ndash;&gt;-->
+<!--              </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+  </main>
+</div>
+</body>
+</html>
