@@ -14,17 +14,21 @@
   color: white;
 }
 
-div{
-  margin: 1px;
-}
-
 .profile-info{
   padding-left: 1rem;
 }
 
+.profile-follow-link{
+  text-decoration: none;
+}
+
+.profile-follow-link:hover{
+  text-decoration: underline solid white;
+}
+
 
 </style>
-<body scroll="no">
+<body>
 <div class="wrapper">
   <header th:replace="fragments.html :: sidebar"></header>
   <main class="main">
@@ -35,13 +39,14 @@ div{
           <img th:if="${!#strings.isEmpty(user.backgroundImage)}" th:src="${user.backgroundImage}"
                style="height: 100%; width: 100%; object-fit: fill; z-index: 1"/>
         </div>
-        <div style="width:150px; height: 150px; min-height: 48px; margin-top: -50px; margin-left: 20px; z-index: 3;">
-          <div class="circular--portrait" style="border: solid">
+
+        <div style="width:150px; height: 150px; min-height: 48px; margin-top: -75px; margin-left: 20px; z-index: 3;">
+          <div class="circular--portrait" style="border: solid; background-color: white">
             <img th:if="${!#strings.isEmpty(user.profileImage)}" th:src="${user.profileImage}"/>
+            <img class="non-profile" th:if="${#strings.isEmpty(user.profileImage)}" th:src="@{/icon/person-circle.svg}" alt="">
           </div>
         </div>
-        <div th:if="${!#strings.isEmpty(user.profileImage)}" style="height:150px; width: 100%;"
-             th:style="'background-image:url(' + ${user.profileImage} + ');'"></div>
+
         <div class="profile-info">
           <div th:text="${user.nickname}"></div>
           <div th:text="'@' + ${user.username}" class="text-muted"></div>
@@ -52,12 +57,12 @@ div{
             <div class="text-muted" th:text="|가입일 : ${#temporals.format(user.joinedDate, 'yyyy년 MM월')}|"></div>
           </div>
           <div style="display: flex; flex-direction: row; justify-content: flex-start; gap: 10px;">
-            <a th:href="@{'/user/' + ${user.username} + '/following'}">
+            <a th:href="@{'/user/' + ${user.username} + '/following'}" class="profile-follow-link">
               <span class="profile-follow-count" th:text="${countFollowing}"></span>
               <small class="text-muted">팔로우중</small>
             </a>
 
-            <a th:href="@{'/user/' + ${user.username} + '/followers'}">
+            <a th:href="@{'/user/' + ${user.username} + '/followers'}" class="profile-follow-link">
               <span class="profile-follow-count" th:text="${countFollowed}"></span>
               <small class="text-muted">팔로워</small>
             </a>
