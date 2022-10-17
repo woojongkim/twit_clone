@@ -74,6 +74,23 @@ class ProfileControllerTest {
         .andExpect(model().attributeExists("following"))
         .andExpect(authenticated())
         .andExpect(view().name("user/following"));
+  }
 
+  @Test
+  @DisplayName("팔로워 리스트")
+  @WithUser("dalniim12@email.com")
+  void followers() throws Exception {
+    User fromUser = userRepository.findByUsername(
+        userService.processNewUser(SIGN_UP_DTO).getUsername());
+    User toUser = userRepository.findByUsername(
+        userService.processNewUser(SIGN_UP_DTO2).getUsername());
+
+    followService.follow(fromUser, toUser);
+
+    mockMvc.perform(get("/user/"+fromUser.getUsername()+"/followers"))
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("following"))
+        .andExpect(authenticated())
+        .andExpect(view().name("user/following"));
   }
 }
