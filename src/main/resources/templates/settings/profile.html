@@ -139,17 +139,16 @@
         newBackgroundImageControl.style.display = 'block';
 
         const cropper = new Cropper(img, {
-          aspectRatio: 1024 / 200,
+          aspectRatio: 598 / 150,
           viewMode: 1,
           dragMode: 'move',
-          autoCropArea: 0.8,
+          autoCropArea: 1,
           restore: true,
           guides: true,
           center: true,
           highlight: true,
           cropBoxMovable: false,
           cropBoxResizable: false,
-          minCanvasHeight: 150,
           toggleDragModeOnDblclick: false,
         });
         backgroundConfirmButton.style.display = 'block';
