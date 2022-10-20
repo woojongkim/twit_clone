@@ -33,14 +33,14 @@ public class UserService implements UserDetailsService {
 
   private final EmailService emailService;
 
-  public UserDto processNewUser(SignUpDto signUpDto) {
+  public User processNewUser(SignUpDto signUpDto) {
     User user = modelMapper.map(signUpDto, User.class);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.generateEmailCheckToken();
     User newUser = userRepository.save(user);
     sendSignupConfirmEmail(newUser);
 
-    return modelMapper.map(newUser, UserDto.class);
+    return newUser;
   }
 
   private void sendSignupConfirmEmail(User user) {

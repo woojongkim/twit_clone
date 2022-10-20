@@ -47,9 +47,9 @@ class FollowControllerTest {
   @DisplayName("팔로우 성공")
   @WithUser("dalniim12@email.com")
   void follow() throws Exception {
-    UserDto userDto = userService.processNewUser(SIGN_UP_DTO);
+    User user = userService.processNewUser(SIGN_UP_DTO);
 
-    mockMvc.perform(post("/user/" + userDto.getUsername() + "/follow")
+    mockMvc.perform(post("/user/" + user.getUsername() + "/follow")
         .with(csrf()))
         .andExpect(model().attributeDoesNotExist("error"))
         .andExpect(status().is3xxRedirection());

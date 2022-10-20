@@ -43,10 +43,9 @@ public class UserController {
       return "user/signup";
     }
 
-    UserDto userDto = userService.processNewUser(signUpDto);
-    User user = userRepository.findByUsername(userDto.getUsername());
+    User newUser = userService.processNewUser(signUpDto);
+    userService.login(newUser);
 
-    userService.login(user);
     return "redirect:/";
   }
 

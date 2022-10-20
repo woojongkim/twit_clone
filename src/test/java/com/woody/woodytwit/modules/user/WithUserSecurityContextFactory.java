@@ -27,15 +27,10 @@ public class WithUserSecurityContextFactory implements WithSecurityContextFactor
                 .email("dalniim12@email.com")
                 .password("qwerqwer")
                 .build();
-        UserDto userDto = userService.processNewUser(signUpDto);
-
-        User newUser = userRepository.findByUsername(userDto.getUsername());
-        newUser.completeSignUp();
-        userRepository.save(newUser);
+        User user = userService.processNewUser(signUpDto);
+        user.completeSignUp();
 
         UserDetails principal = userService.loadUserByUsername(signUpDto.getEmail());
-
-
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(), principal.getAuthorities());
         SecurityContext context = SecurityContextHolder.createEmptyContext();
