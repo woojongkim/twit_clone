@@ -9,7 +9,6 @@ import com.woody.woodytwit.modules.user.dto.UserDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-import javax.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,9 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
@@ -73,7 +70,7 @@ public class ProfileController {
       throw new UsernameNotFoundException(username);
     }
 
-    List<UserDto> collect = followRepository.findByFromUser(byUsername).stream()
+    List<UserDto> collect = followRepository.findFollowWithToUserByFromUser(byUsername).stream()
         .map(Follow::getToUser).map(u -> modelMapper.map(u, UserDto.class)).collect(
             Collectors.toList());
 
@@ -91,7 +88,7 @@ public class ProfileController {
       throw new UsernameNotFoundException(username);
     }
 
-    List<UserDto> collect = followRepository.findByToUser(byUsername).stream()
+    List<UserDto> collect = followRepository.findFollowWithFromUserByToUser(byUsername).stream()
         .map(Follow::getFromUser).map(u -> modelMapper.map(u, UserDto.class)).collect(
             Collectors.toList());
 
