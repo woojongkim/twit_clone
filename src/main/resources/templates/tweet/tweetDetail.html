@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="fragments.html :: head"></head>
+<style>
+
+
+</style>
+<body scroll="no">
+<div class="wrapper">
+  <header th:replace="fragments.html :: sidebar"></header>
+  <main class="main">
+    <section class="main-backward">
+      <a href="javascript:history.back()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <div class="main-backward-info">
+        <div class="name">스레드</div>
+      </div>
+    </section>
+    <section class="tweet-article">
+      <div class="user-info">
+        <div class="metadata">
+          <a href="#" th:href="'/user/'+${tweet.user.username}">
+            <img src="../../static/img/profile.png" th:src="${tweet.user.profileImage}" />
+            <div class="info">
+              <div class="nickname link-text" th:text="${tweet.user.nickname}">우디</div>
+              <div class="username" th:text="'@' + ${tweet.user.username}">@Woody</div>
+            </div>
+          </a>
+        </div>
+        <i class="more fa-solid fa-ellipsis"></i>
+      </div>
+      <div class="content" th:text="${tweet.content}">this image but in 4k</div>
+      <div class="tweet-date" th:text="${#temporals.format(tweet.createTime, 'a H시 mm분 • yyyy년 MM월 dd일')}">오전 6:29 • 2022년 10월 20일 • Twitter for Android</div>
+      <hr>
+      <ul class="tweet-count">
+        <li class="link-text">
+          <span class="count" th:text="${tweet.retweetCount}">8,929</span>
+          <span class="decription">리트윗</span>
+        </li>
+        <li class="link-text">
+          <span class="count" th:text="${tweet.retweetWithCommentCount}">371</span>
+          <span class="decription">인용한 트윗</span>
+        </li>
+        <li class="link-text">
+          <span class="count" th:text="${tweet.likeCount}">6만</span>
+          <span class="decription">마음에 들어요</span>
+        </li>
+      </ul>
+      <hr>
+      <div class="tweet-action">
+        <li>
+          <i class="fa-regular fa-comment"></i>
+        </li>
+        <li>
+          <i class="fa-solid fa-retweet"></i>
+        </li>
+        <li>
+          <i class="fa-regular fa-heart"></i>
+        </li>
+        <li>
+          <i class="fa-solid fa-share-from-square"></i>
+        </li>
+      </div>
+      <hr>
+      <div class="tweet-reply">
+          <img src="../../static/img/profile.png" class="profile-reply" th:src="${currentUser.profileImage}" />
+          <textarea id='reply-form' class="textarea reply-form" name="reply-form" placeholder="내 답글을 트윗합니다." rows=3></textarea>
+        <button class="btn" id="modal-tweet-btn">답글</button>
+      </div>
+    </section>
+    <hr>
+  </main>
+</div>
+
+<script>
+  document.querySelector("textarea[name=reply-form]").addEventListener("input", function () {
+    const contentElement = document.getElementById('reply-form');
+    const content = contentElement.value;
+    contentElement.setAttribute('rows', Math.max(3, content.split("\n").length));
+  });
+
+</script>
+</body>
+</html>

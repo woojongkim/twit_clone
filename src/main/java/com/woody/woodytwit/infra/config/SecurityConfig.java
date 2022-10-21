@@ -26,6 +26,7 @@ public class SecurityConfig {
         .antMatchers("/signup", "/email-confirm","/login").permitAll()
         .anyRequest().authenticated()
         .and()
+        .csrf().disable()
         .formLogin()
         .loginPage("/login");
 

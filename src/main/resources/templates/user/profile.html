@@ -5,89 +5,75 @@
 <head th:replace="fragments.html :: head"></head>
 <style>
 
-.profile-calendar{
-  display: flex;
-  gap: 5px;
-}
 
-.profile-follow-count{
-  color: white;
-}
-
-.profile-info{
-  padding-left: 1rem;
-}
-
-.profile-follow-link{
-  text-decoration: none;
-}
-
-.profile-follow-link:hover{
-  text-decoration: underline solid white;
-}
 
 
 </style>
 <body>
 <div class="wrapper">
+<!--  side nav-->
   <header th:replace="fragments.html :: sidebar"></header>
+
+<!--  main -->
   <main class="main">
 
-    <div class="profile-container">
+<!-- backward -->
+    <section class="main-backward" >
+      <a href="#" th:href="@{/}">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <div class="main-backward-info">
+        <div class="name" th:text="${user.nickname}">우디</div>
+        <div class="meta-info">14트윗</div>
+      </div>
+    </section>
+
+<!--  user profile info  -->
+    <section class="profile-container">
       <div th:if="${user != null}">
-        <div style="height:150px; width: 100%; background-color: #1e1e1e">
+        <div class='background-profile-image'>
           <img th:if="${!#strings.isEmpty(user.backgroundImage)}" th:src="${user.backgroundImage}"
                style="height: 100%; width: 100%; object-fit: fill; z-index: 1"/>
         </div>
 
-        <div style="width:150px; height: 150px; min-height: 48px; margin-top: -75px; margin-left: 20px; z-index: 3;">
-          <div class="circular--portrait" style="border: solid; background-color: white">
-            <img th:if="${!#strings.isEmpty(user.profileImage)}" th:src="${user.profileImage}"/>
-            <img class="non-profile" th:if="${#strings.isEmpty(user.profileImage)}" th:src="@{/icon/person-circle.svg}" alt="">
-          </div>
-        </div>
+         <img class="profile-image" th:if="${!#strings.isEmpty(user.profileImage)}" th:src="${user.profileImage}"/>
+         <img src="../../static/icon/person-circle.svg" class="profile-image" th:if="${#strings.isEmpty(user.profileImage)}" th:src="@{/icon/person-circle.svg}" alt="">
+
+        <span class="profile-update-btn" th:if="${isOwner}">
+              <a href="#" th:href="@{/settings/profile}">프로필 수정</a>
+            </span>
 
         <div class="profile-info">
-          <div th:text="${user.nickname}"></div>
-          <div th:text="'@' + ${user.username}" class="text-muted"></div>
-          <div th:text="${user.description}"></div>
+          <div class="userinfo">
+            <div th:text="${user.nickname}" class="nickname">우디</div>
+            <div th:text="'@' + ${user.username}" class="username">@woody</div>
+          </div>
+          <div th:text="${user.description}">자기소개</div>
 
           <div class="profile-calendar">
-            <i class="bi bi-calendar3"></i>
-            <div class="text-muted" th:text="|가입일 : ${#temporals.format(user.joinedDate, 'yyyy년 MM월')}|"></div>
+            <i class="fa-solid fa-calendar-days"></i>
+            <div class="text-muted" th:text="|가입일 : ${#temporals.format(user.joinedDate, 'yyyy년 MM월')}|">2022년 10월</div>
           </div>
           <div style="display: flex; flex-direction: row; justify-content: flex-start; gap: 10px;">
-            <a th:href="@{'/user/' + ${user.username} + '/following'}" class="profile-follow-link">
-              <span class="profile-follow-count" th:text="${countFollowing}"></span>
+            <a th:href="@{'/user/' + ${user.username} + '/following'}" class="link-text">
+              <span class="profile-follow-count" th:text="${countFollowing}">1</span>
               <small class="text-muted">팔로우중</small>
             </a>
 
-            <a th:href="@{'/user/' + ${user.username} + '/followers'}" class="profile-follow-link">
-              <span class="profile-follow-count" th:text="${countFollowed}"></span>
+            <a th:href="@{'/user/' + ${user.username} + '/followers'}" class="link-text">
+              <span class="profile-follow-count" th:text="${countFollowed}">1</span>
               <small class="text-muted">팔로워</small>
             </a>
           </div>
-
-          <div th:if="${!isOwner}">
-            <form th:if="!${isFollow}" th:action="|${user.username}/follow|" method="post">
-              <button type="submit">팔로우</button>
-            </form>
-
-            <form th:if="${isFollow}" th:action="|${user.username}/unfollow|" method="post">
-              <button type="submit">언팔로우</button>
-            </form>
-          </div>
-
-          <div th:if="${isOwner}">
-            <a href="#" th:href="@{/settings/profile}">
-              <button type="button">프로필 수정</button>
-            </a>
-          </div>
         </div>
-        </div>
+      </div>
       <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    </section>
 
-    </div>
+    <hr>
+
+<!--  tweet  -->
+
   </main>
 </div>
 </body>
