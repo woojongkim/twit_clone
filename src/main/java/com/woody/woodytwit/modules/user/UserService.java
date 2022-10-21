@@ -2,9 +2,10 @@ package com.woody.woodytwit.modules.user;
 
 import com.woody.woodytwit.infra.mail.EmailMessage;
 import com.woody.woodytwit.infra.mail.EmailService;
+import com.woody.woodytwit.modules.common.ImageUtils;
 import com.woody.woodytwit.modules.user.dto.ProfileUpdateDto;
 import com.woody.woodytwit.modules.user.dto.SignUpDto;
-import com.woody.woodytwit.modules.user.dto.UserDto;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Service
@@ -87,8 +89,21 @@ public class UserService implements UserDetailsService {
     sendSignupConfirmEmail(user);
   }
 
-  public void updateProfile(User user, ProfileUpdateDto profileUpdateDto) {
+  public void updateProfile(User user, ProfileUpdateDto profileUpdateDto) throws IOException {
+    modelMapper.typeMap(ProfileUpdateDto.class, User.class)
+        .addMappings(mapper -> mapper.skip(User::setProfileImage))
+        .addMappings(mapper -> mapper.skip(User::setBackgroundImage));
     modelMapper.map(profileUpdateDto, user);
+
+    if(StringUtils.hasText(profileUpdateDto.getBackgroundImage())){
+      user.setBackgroundImage(ImageUtils.resizeDataURI(profileUpdateDto.getBackgroundImage(), 650));
+    }
+
+    if(StringUtils.hasLength(profileUpdateDto.getProfileImage())){
+      user.setProfileImage(ImageUtils.resizeDataURI(profileUpdateDto.getProfileImage(), 200));
+    }
+
+
     userRepository.save(user);
   }
 }

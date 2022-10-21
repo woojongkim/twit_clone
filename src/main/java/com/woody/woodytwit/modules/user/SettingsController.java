@@ -3,6 +3,7 @@ package com.woody.woodytwit.modules.user;
 import com.woody.woodytwit.modules.user.dto.ProfileUpdateDto;
 import com.woody.woodytwit.modules.user.dto.SignUpDto;
 import com.woody.woodytwit.modules.user.dto.UserDto;
+import java.io.IOException;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +24,17 @@ public class SettingsController {
 
   @GetMapping("/settings/profile")
   public String profileForm(@CurrentUser User user, Model model) {
-    model.addAttribute(modelMapper.map(user, ProfileUpdateDto.class));
+    ProfileUpdateDto profileUpdateDto = modelMapper.map(user, ProfileUpdateDto.class);
+    profileUpdateDto.setProfileImage(null);
+    profileUpdateDto.setBackgroundImage(null);
+    model.addAttribute(profileUpdateDto);
 
     return "settings/profile";
   }
 
   @PostMapping("/settings/profile")
-  public String profile(@CurrentUser User user, @Valid ProfileUpdateDto profileUpdateDto, Errors errors, Model model) {
+  public String profile(@CurrentUser User user, @Valid ProfileUpdateDto profileUpdateDto, Errors errors, Model model)
+      throws IOException {
 
     if (errors.hasErrors()) {
       return "settings/profile";
