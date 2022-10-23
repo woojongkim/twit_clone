@@ -63,6 +63,9 @@ public class User {
   @Lob @Basic(fetch = FetchType.EAGER)
   private String profileImage;
 
+  @Lob @Basic(fetch = FetchType.EAGER)
+  private String profileThumbnail;
+
   public void generateEmailCheckToken() {
     this.emailCheckToken = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
     this.emailCheckTokenGeneratedDate = LocalDateTime.now();

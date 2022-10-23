@@ -75,9 +75,9 @@
         <a href="#"
            class="d-flex align-items-center ms-2 text-white text-decoration-none mb-5"
            data-bs-toggle="dropdown" aria-expanded="false">
-          <div class="circular--portrait" style="width: 35px; height: 35px;">
-            <img th:if="${!#strings.isEmpty(currentUser.profileImage)}"
-                 th:src="${currentUser.profileImage}"/>
+          <div class="circular--portrait" style="width: 50px; height: 50px;">
+            <img th:if="${!#strings.isEmpty(currentUser.profileThumbnail)}"
+                 th:src="${currentUser.profileThumbnail}"/>
           </div>
           <div class="profile-tray-name ms-2 ">
             <div class="d-flex flex-column m-1">

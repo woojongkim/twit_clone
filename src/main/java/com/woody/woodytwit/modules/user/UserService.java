@@ -101,8 +101,8 @@ public class UserService implements UserDetailsService {
 
     if(StringUtils.hasLength(profileUpdateDto.getProfileImage())){
       user.setProfileImage(ImageUtils.resizeDataURI(profileUpdateDto.getProfileImage(), 200));
+      user.setProfileThumbnail(ImageUtils.resizeDataURI(profileUpdateDto.getProfileImage(), 50));
     }
-
 
     userRepository.save(user);
   }

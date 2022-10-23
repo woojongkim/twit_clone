@@ -31,8 +31,8 @@
         <article class="follow-card">
           <div class="circular--portrait follow-card-image">
             <a class="follow-card-name-nickname" th:href="'/user/'+${user.username}">
-              <img th:if="${!#strings.isEmpty(user.profileImage)}" th:src="${user.profileImage}" alt="">
-              <img class="non-profile" th:if="${#strings.isEmpty(user.profileImage)}" th:src="@{/icon/person-circle.svg}" alt="">
+              <img th:if="${!#strings.isEmpty(user.profileThumbnail)}" th:src="${user.profileThumbnail}" alt="">
+              <img class="non-profile" th:if="${#strings.isEmpty(user.profileThumbnail)}" th:src="@{/icon/person-circle.svg}" alt="">
             </a>
           </div>
           <div class="follow-card-info">

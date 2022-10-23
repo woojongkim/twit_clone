@@ -27,4 +27,6 @@ public class UserDto {
   private String backgroundImage;
 
   private String profileImage;
+
+  private String profileThumbnail;
 }
