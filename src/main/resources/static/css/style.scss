@@ -1,0 +1,574 @@
+/* Size */
+$desktop-sidebar-width: 250px;
+$mobile-sidebar-width: 50px;
+$side-padding: 12px;
+
+/* Color */
+$white-color: #d6d9db;
+$blue-light-color: #375a7f;
+$blue-color: #1a89d4;
+$gray-light-color: #64686d;
+$gray-dark-color: hsl(0, 0%, 17%);
+$dark-background-color: #000;
+$bs-body-bg: #000;
+
+/* Font Size */
+$font-larger: calc(1rem * 1.4);
+$font-large: calc(1rem * 1.2);
+$font-medium: calc(1rem * 1);
+$font-small: calc(1rem * 0.8);
+$font-micro: calc(1rem * 0.6);
+
+@mixin mobile {
+  @media (max-width: 868px) {
+    @content;
+  }
+}
+
+@mixin white-link {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    color: unset;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+@mixin button-type-full {
+  color: unset;
+  text-decoration: none;
+  &:hover {
+    color: unset;
+    cursor: pointer;
+  }
+}
+
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Roboto;
+}
+
+body {
+  height: 100vh;
+  overflow-y: scroll;
+  line-height: unset;
+}
+
+dl,
+ol,
+ul {
+  margin: 0;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.circular--portrait {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+.sidebar {
+  width: $desktop-sidebar-width;
+  height: 100%;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  align-items: flex-end;
+  justify-content: space-between;
+
+
+  .sidebar-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    list-style: none;
+    font-size: calc(1rem * 1.3);
+    padding: 0;
+
+    a {
+      text-decoration: none;
+    }
+
+
+    .sidebar-link {
+      transition: 0.3s;
+      padding: 10px 10px;
+      border-radius: 100px;
+      color: $white-color;
+
+      &:hover {
+        background-color: #504e4e;
+      }
+
+      .menu-text {
+        margin-left: 1rem;
+      }
+
+    }
+
+  }
+
+  .tweet-post-btn {
+    width: 80%;
+    border-radius: 100px;
+    padding: 0.5rem 0;
+  }
+
+  .tweet-post-btn-icon {
+    display: none;
+  }
+
+  .tray-profile {
+    width: 100%;
+  }
+}
+
+.main {
+  margin-left: $desktop-sidebar-width;
+  max-width: 600px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  border-left: thin solid rgb(51, 51, 51);
+  border-right: thin solid rgb(51, 51, 51);
+}
+
+@include mobile {
+  .sidebar {
+    width: $mobile-sidebar-width;
+
+    .menu-text {
+      display: none;
+    }
+
+    .profile-tray-name {
+      display: none;
+    }
+
+    .tweet-post-btn-icon {
+      display: block;
+    }
+
+    .tweet-post-btn-name {
+      display: none;
+    }
+
+  }
+  .main {
+    margin-left: $mobile-sidebar-width;
+    width: 100%;
+  }
+}
+
+
+.link-text {
+  @include white-link;
+}
+
+.textarea {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  vertical-align: middle;
+  overflow: hidden;
+  resize: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
+.main-backward {
+  display: flex;
+  padding: 5px $side-padding;
+  align-items: center;
+  gap: 2rem;
+
+  a {
+    color: $white-color;
+    border-radius: 50%;
+    padding: 2px 6px;
+
+    &:hover {
+      background-color: $gray-light-color;
+    }
+  }
+
+  .main-backward-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .name {
+    font-size: $font-larger;
+    font-weight: 800;
+  }
+
+  .meta-info {
+    color: $gray-light-color;
+    font-size: $font-small;
+  }
+
+}
+
+/* tweet-create-modal */
+.tweet-post-modal {
+  textarea {
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+/* tweet-article */
+.tweet-article {
+  padding: 0 $side-padding;
+  display: flex;
+  flex-direction: column;
+
+  .user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+    }
+
+    .more {
+      color: $gray-light-color;
+      cursor: pointer;
+      border-radius: 50%;
+      padding: 5px;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: $gray-light-color;
+        color: $dark-background-color;
+      }
+    }
+  }
+
+  .metadata {
+    a {
+      display: flex;
+      gap: 10px;
+      color: $white-color;
+      text-decoration: none;
+    }
+
+    .nickname {
+      font-weight: bold;
+    }
+
+    .username {
+      color: $gray-light-color;
+      font-size: $font-small;
+    }
+  }
+
+  .content {
+    padding: 1rem 0;
+    font-size: $font-larger;
+    font-weight: 500;
+  }
+
+  .tweet-date {
+    font-size: $font-small;
+    color: $gray-light-color;
+  }
+
+  .tweet-count {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    padding: 0 $side-padding;
+    font-size: $font-small;
+    align-items: center;
+
+    .count {
+      color: $white-color;
+    }
+
+    .description {
+      color: $gray-light-color;
+    }
+
+    .tweet-action {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 $side-padding;
+
+      li {
+        font-size: $font-large;
+        color: $gray-light-color;
+        border-radius: 50%;
+        padding: 5px 10px;
+
+        &:hover {
+          color: $blue-color;
+          background-color: $gray-dark-color;
+        }
+      }
+
+    }
+
+    .tweet-reply {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      width: 100%;
+      justify-content: space-between;
+
+      img {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+      }
+
+      .reply-form {
+        flex: 1;
+        color: $gray-light-color;
+        font-size: $font-large;
+
+        &:focus {
+          color: $white-color;
+        }
+      }
+
+      .btn {
+        padding: 0.5rem 0.8rem;
+        border-radius: 100px;
+        background-color: $blue-light-color;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.profile-follow-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100px;
+}
+
+//.profile-follow-user-header {
+//  display: flex;
+//  flex-direction: row;
+//  position: relative;
+//  align-items: center;
+//  gap: 20px;
+//  margin-left: 1rem;
+//}
+//
+//.profile-follow-user-header > a > i {
+//  width: 2rem;
+//  height: 2rem;
+//  color: white;
+//
+//  border-radius: 100px;
+//  padding: 6px;
+//
+//  transition: 0.5s;
+//}
+//
+//.profile-follow-user-header > a > i:hover {
+//  background-color: #504e4e;
+//}
+
+//.userinfo-nickname {
+//  font-size: calc(1rem * 1.2);
+//}
+//
+//.userinfo-tag {
+//  font-size: calc(1rem * 0.8);
+//  color: darkgray;
+//}
+
+.profile-follow-tab {
+  display: flex;
+
+  font-size: 1rem;
+  border-bottom: thin solid rgb(51, 51, 51);
+  letter-spacing: 0.1rem;
+
+  a {
+    flex: 1;
+    text-decoration: none;
+    transition: 0.5s;
+    font-weight: bold;
+    color: darkgray;
+
+    &:hover {
+      background-color: #504e4e;
+    }
+
+    .active {
+      color: white;
+      text-decoration-line: underline;
+      text-decoration-color: cornflowerblue;
+      text-decoration-style: solid;
+      text-decoration-thickness: 0.2rem;
+    }
+
+    .profile-follow-tab-item {
+      text-align: center;
+      padding: 1rem 0;
+    }
+  }
+
+
+}
+
+
+.follow-list-container {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+
+
+  .follow-card {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    .follow-card-image {
+      width: 50px;
+      height: 50px;
+
+      .non-profile {
+        fill: darkgray;
+      }
+    }
+  }
+
+
+  .follow-card-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .follow-card-main {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .follow-card-name-nickname {
+        color: $white-color;
+      }
+
+      .follow-card-name-tag {
+        color: darkgray;
+        font-size: 0.8rem;
+      }
+
+      .follow-card-follow-btn {
+        background-color: white;
+        color: #1e1e1e;
+        border-radius: 100px;
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+    }
+
+    .follow-card-footer {
+      font-size: 1rem;
+    }
+  }
+}
+
+
+.profile-container {
+  .background-profile-image {
+    height: 150px;
+    width: 100%;
+    background-color: #1e1e1e;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    min-height: 48px;
+    top: -75px;
+    left: 20px;
+    z-index: 3;
+    position: relative;
+    border-radius: 50%;
+  }
+
+  .profile-update-btn {
+    background-color: $dark-background-color;
+    border: $white-color solid thin;
+    border-radius: 100px;
+    font-size: $font-medium;
+    padding: 0.5rem 1rem;
+    float: right;
+    position: relative;
+    top: 15px;
+    right: 20px;
+
+    a {
+      @include button-type-full;
+
+      &:hover {
+        filter: brightness(1.5);
+      }
+    }
+  }
+
+  .profile-follow-count {
+    color: white;
+  }
+
+  .profile-info {
+    position: relative;
+    top: -50px;
+    padding: 0 $side-padding;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .profile-calendar {
+      display: flex;
+      gap: 5px;
+    }
+
+    .nickname {
+      font-size: $font-large;
+      font-weight: 800;
+    }
+
+    .username {
+      font-size: $font-medium;
+      color: $gray-light-color;
+    }
+  }
+}

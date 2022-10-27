@@ -24,48 +24,51 @@
   <div class="sidebar">
     <ul class="sidebar-menu">
       <li>
-        <a href="#" class="sidebar-link text-white">
+        <a href="#" class="sidebar-link ">
           <i class="fa-brands fa-twitter"></i>
         </a>
       </li>
       <li>
-        <a href="#" th:href="@{/}" class="sidebar-link text-white">
+        <a href="#" th:href="@{/}" class="sidebar-link ">
           <i class="fa-solid fa-house"></i>
           <span class="menu-text">홈</span>
         </a>
       </li>
       <li>
-        <a href="#" class="sidebar-link text-white">
+        <a href="#" class="sidebar-link ">
           <i class="fa-solid fa-magnifying-glass"></i>
           <span class="menu-text">탐색하기</span>
         </a>
       </li>
       <li>
-        <a href="#" class="sidebar-link text-white">
+        <a href="#" class="sidebar-link ">
           <i class="fa-regular fa-bell"></i>
           <span class="menu-text">알림</span>
         </a>
       </li>
       <li>
-        <a href="#" class="sidebar-link text-white">
+        <a href="#" class="sidebar-link ">
           <i class="fa-regular fa-envelope"></i>
           <span class="menu-text">쪽지</span>
         </a>
       </li>
       <li>
-        <a href="#" class="sidebar-link text-white">
+        <a href="#" class="sidebar-link ">
           <i class="fa-regular fa-bookmark"></i>
           <span class="menu-text">북마크</span>
         </a>
       </li>
       <li>
-        <a href="#" th:href="'/user/' + ${currentUser.username}" class="sidebar-link text-white">
+        <a href="#" th:href="'/user/' + ${currentUser.username}" class="sidebar-link ">
           <i class="fa-regular fa-user"></i>
           <span class="menu-text">프로필</span>
         </a>
       </li>
       <li>
-        <button type="button" class="btn btn-primary tweet-post-btn" data-bs-toggle="modal" data-bs-target="#tweet-post-modal">트윗하기</button>
+        <button type="button" class="btn btn-primary tweet-post-btn" data-bs-toggle="modal" data-bs-target="#tweet-post-modal">
+          <span class="tweet-post-btn-name">트윗하기</span>
+          <i class="fa-solid fa-plus tweet-post-btn-icon"></i>
+        </button>
       </li>
 
     </ul>
@@ -73,7 +76,7 @@
     <article class="d-flex flex-column tray-profile">
       <div class="dropdown">
         <a href="#"
-           class="d-flex align-items-center ms-2 text-white text-decoration-none mb-5"
+           class="d-flex align-items-center ms-2  text-decoration-none mb-5"
            data-bs-toggle="dropdown" aria-expanded="false">
           <div class="circular--portrait" style="width: 50px; height: 50px;">
             <img th:if="${!#strings.isEmpty(currentUser.profileThumbnail)}"
