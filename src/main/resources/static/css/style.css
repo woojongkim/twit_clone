@@ -1,0 +1,424 @@
+/* Size */
+/* Color */
+/* Font Size */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Roboto;
+}
+
+body {
+  height: 100vh;
+  overflow-y: scroll;
+  line-height: unset;
+}
+
+dl,
+ol,
+ul {
+  margin: 0;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.circular--portrait {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.circular--portrait img {
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100%;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.sidebar .sidebar-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  list-style: none;
+  font-size: 1.3rem;
+  padding: 0;
+}
+.sidebar .sidebar-menu a {
+  text-decoration: none;
+}
+.sidebar .sidebar-menu .sidebar-link {
+  transition: 0.3s;
+  padding: 10px 10px;
+  border-radius: 100px;
+  color: #d6d9db;
+}
+.sidebar .sidebar-menu .sidebar-link:hover {
+  background-color: #504e4e;
+}
+.sidebar .sidebar-menu .sidebar-link .menu-text {
+  margin-left: 1rem;
+}
+.sidebar .tweet-post-btn {
+  width: 80%;
+  border-radius: 100px;
+  padding: 0.5rem 0;
+}
+.sidebar .tweet-post-btn-icon {
+  display: none;
+}
+.sidebar .tray-profile {
+  width: 100%;
+}
+
+.main {
+  margin-left: 250px;
+  max-width: 600px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  border-left: thin solid rgb(51, 51, 51);
+  border-right: thin solid rgb(51, 51, 51);
+}
+
+@media (max-width: 868px) {
+  .sidebar {
+    width: 50px;
+  }
+  .sidebar .menu-text {
+    display: none;
+  }
+  .sidebar .profile-tray-name {
+    display: none;
+  }
+  .sidebar .tweet-post-btn-icon {
+    display: block;
+  }
+  .sidebar .tweet-post-btn-name {
+    display: none;
+  }
+  .main {
+    margin-left: 50px;
+    width: 100%;
+  }
+}
+.link-text {
+  text-decoration: none;
+}
+.link-text:hover {
+  text-decoration: underline;
+  color: unset;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.textarea {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  vertical-align: middle;
+  overflow: hidden;
+  resize: none;
+}
+.textarea:focus {
+  outline: none;
+}
+
+.main-backward {
+  display: flex;
+  padding: 5px 12px;
+  align-items: center;
+  gap: 2rem;
+}
+.main-backward a {
+  color: #d6d9db;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+.main-backward a:hover {
+  background-color: #64686d;
+}
+.main-backward .main-backward-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.main-backward .name {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+.main-backward .meta-info {
+  color: #64686d;
+  font-size: 0.8rem;
+}
+
+/* tweet-create-modal */
+.tweet-post-modal textarea {
+  border: none;
+}
+.tweet-post-modal textarea:focus {
+  outline: none;
+}
+
+/* tweet-article */
+.tweet-article {
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+}
+.tweet-article .user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tweet-article .user-info img {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+}
+.tweet-article .user-info .more {
+  color: #64686d;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 5px;
+  transition: 0.3s;
+}
+.tweet-article .user-info .more:hover {
+  background-color: #64686d;
+  color: #000;
+}
+.tweet-article .metadata a {
+  display: flex;
+  gap: 10px;
+  color: #d6d9db;
+  text-decoration: none;
+}
+.tweet-article .metadata .nickname {
+  font-weight: bold;
+}
+.tweet-article .metadata .username {
+  color: #64686d;
+  font-size: 0.8rem;
+}
+.tweet-article .content {
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+.tweet-article .tweet-date {
+  font-size: 0.8rem;
+  color: #64686d;
+}
+.tweet-article .tweet-count {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  padding: 0 12px;
+  font-size: 0.8rem;
+  align-items: center;
+}
+.tweet-article .tweet-count .count {
+  color: #d6d9db;
+}
+.tweet-article .tweet-count .description {
+  color: #64686d;
+}
+.tweet-article .tweet-count .tweet-action {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 12px;
+}
+.tweet-article .tweet-count .tweet-action li {
+  font-size: 1.2rem;
+  color: #64686d;
+  border-radius: 50%;
+  padding: 5px 10px;
+}
+.tweet-article .tweet-count .tweet-action li:hover {
+  color: #1a89d4;
+  background-color: hsl(0deg, 0%, 17%);
+}
+.tweet-article .tweet-count .tweet-reply {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  width: 100%;
+  justify-content: space-between;
+}
+.tweet-article .tweet-count .tweet-reply img {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+}
+.tweet-article .tweet-count .tweet-reply .reply-form {
+  flex: 1;
+  color: #64686d;
+  font-size: 1.2rem;
+}
+.tweet-article .tweet-count .tweet-reply .reply-form:focus {
+  color: #d6d9db;
+}
+.tweet-article .tweet-count .tweet-reply .btn {
+  padding: 0.5rem 0.8rem;
+  border-radius: 100px;
+  background-color: #375a7f;
+  font-weight: bold;
+}
+
+.profile-follow-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100px;
+}
+
+.profile-follow-tab {
+  display: flex;
+  font-size: 1rem;
+  border-bottom: thin solid rgb(51, 51, 51);
+  letter-spacing: 0.1rem;
+}
+.profile-follow-tab a {
+  flex: 1;
+  text-decoration: none;
+  transition: 0.5s;
+  font-weight: bold;
+  color: darkgray;
+}
+.profile-follow-tab a:hover {
+  background-color: #504e4e;
+}
+.profile-follow-tab a .active {
+  color: white;
+  text-decoration-line: underline;
+  text-decoration-color: cornflowerblue;
+  text-decoration-style: solid;
+  text-decoration-thickness: 0.2rem;
+}
+.profile-follow-tab a .profile-follow-tab-item {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.follow-list-container {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.follow-list-container .follow-card {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.follow-list-container .follow-card .follow-card-image {
+  width: 50px;
+  height: 50px;
+}
+.follow-list-container .follow-card .follow-card-image .non-profile {
+  fill: darkgray;
+}
+.follow-list-container .follow-card-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.follow-list-container .follow-card-info .follow-card-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.follow-list-container .follow-card-info .follow-card-main .follow-card-name-nickname {
+  color: #d6d9db;
+}
+.follow-list-container .follow-card-info .follow-card-main .follow-card-name-tag {
+  color: darkgray;
+  font-size: 0.8rem;
+}
+.follow-list-container .follow-card-info .follow-card-main .follow-card-follow-btn {
+  background-color: white;
+  color: #1e1e1e;
+  border-radius: 100px;
+  font-size: 1rem;
+  padding: 0 1rem;
+}
+.follow-list-container .follow-card-info .follow-card-footer {
+  font-size: 1rem;
+}
+
+.profile-container .background-profile-image {
+  height: 150px;
+  width: 100%;
+  background-color: #1e1e1e;
+}
+.profile-container .profile-image {
+  width: 150px;
+  height: 150px;
+  min-height: 48px;
+  top: -75px;
+  left: 20px;
+  z-index: 3;
+  position: relative;
+  border-radius: 50%;
+}
+.profile-container .profile-update-btn {
+  background-color: #000;
+  border: #d6d9db solid thin;
+  border-radius: 100px;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  float: right;
+  position: relative;
+  top: 15px;
+  right: 20px;
+}
+.profile-container .profile-update-btn a {
+  color: unset;
+  text-decoration: none;
+}
+.profile-container .profile-update-btn a:hover {
+  color: unset;
+  cursor: pointer;
+}
+.profile-container .profile-update-btn a:hover {
+  filter: brightness(1.5);
+}
+.profile-container .profile-follow-count {
+  color: white;
+}
+.profile-container .profile-info {
+  position: relative;
+  top: -50px;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.profile-container .profile-info .profile-calendar {
+  display: flex;
+  gap: 5px;
+}
+.profile-container .profile-info .nickname {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.profile-container .profile-info .username {
+  font-size: 1rem;
+  color: #64686d;
+}
+
+/*# sourceMappingURL=style.css.map */

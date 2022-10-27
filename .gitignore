@@ -39,8 +39,3 @@ out/
 
 ### note modules ###
 /src/main/resources/static/node_modules/
-
-
-### css ###
-/src/main/resources/static/css/**/*.css
-/src/main/resources/static/css/**/*.css.map
