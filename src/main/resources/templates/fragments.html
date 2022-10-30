@@ -80,7 +80,7 @@
            data-bs-toggle="dropdown" aria-expanded="false">
           <div class="circular--portrait" style="width: 50px; height: 50px;">
             <img th:if="${!#strings.isEmpty(currentUser.profileThumbnail)}"
-                 th:src="${currentUser.profileThumbnail}"/>
+                 th:src="${@environment.getProperty('storage.host')} + ${currentUser.profileThumbnail}"/>
           </div>
           <div class="profile-tray-name ms-2 ">
             <div class="d-flex flex-column m-1">
@@ -150,7 +150,7 @@
         <div class="modal-content-body">
           <div class="circular--portrait" style="width: 55px; height: 55px;">
             <img th:if="${!#strings.isEmpty(currentUser.profileImage)}"
-                 th:src="${currentUser.profileImage}"/>
+                 th:src="${@environment.getProperty('storage.host')} + ${currentUser.profileImage}"/>
           </div>
 
           <div class="modal-content-main">

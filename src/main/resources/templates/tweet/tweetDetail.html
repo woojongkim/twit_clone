@@ -25,7 +25,7 @@
       <div class="user-info">
         <div class="metadata">
           <a href="#" th:href="'/user/'+${tweet.user.username}">
-            <img src="../../static/img/profile.png" th:src="${tweet.user.profileImage}" />
+            <img src="../../static/img/profile.png" th:src="${@environment.getProperty('storage.host')} + ${tweet.user.profileImage}" />
             <div class="info">
               <div class="nickname link-text" th:text="${tweet.user.nickname}">우디</div>
               <div class="username" th:text="'@' + ${tweet.user.username}">@Woody</div>
@@ -68,7 +68,7 @@
       </div>
       <hr>
       <div class="tweet-reply-form">
-          <img src="../../static/img/profile.png" class="profile-reply" th:src="${currentUser.profileImage}" />
+          <img src="../../static/img/profile.png" class="profile-reply" th:src="${@environment.getProperty('storage.host')} + ${currentUser.profileImage}" />
           <textarea id='reply-form' class="textarea reply-form" name="reply-form" placeholder="내 답글을 트윗합니다." rows=3></textarea>
         <button class="btn" id="reply-btn">답글</button>
       </div>
@@ -81,7 +81,7 @@
         <div class="user-info">
           <div class="metadata">
             <a href="#" th:href="'/user/'+${reply.user.username}">
-              <img src="../../static/img/profile.png" th:src="${reply.user.profileImage}" />
+              <img src="../../static/img/profile.png" th:src="${@environment.getProperty('storage.host')} + ${reply.user.profileImage}" />
               <div class="info">
                   <span class="nickname link-text" th:text="${reply.user.nickname}">우디</span>
                   <span class="username" th:text="'@' + ${reply.user.username}">@Woody</span>

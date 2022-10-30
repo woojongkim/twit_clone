@@ -32,11 +32,11 @@
     <section class="profile-container">
       <div th:if="${user != null}">
         <div class='background-profile-image'>
-          <img th:if="${!#strings.isEmpty(user.backgroundImage)}" th:src="${user.backgroundImage}"
+          <img th:if="${!#strings.isEmpty(user.backgroundImage)}" th:src="${@environment.getProperty('storage.host')} + ${user.backgroundImage}"
                style="height: 100%; width: 100%; object-fit: fill; z-index: 1"/>
         </div>
 
-         <img class="profile-image" th:if="${!#strings.isEmpty(user.profileImage)}" th:src="${user.profileImage}"/>
+         <img class="profile-image" th:if="${!#strings.isEmpty(user.profileImage)}" th:src="${@environment.getProperty('storage.host')} + ${user.profileImage}"/>
          <img src="../../static/icon/person-circle.svg" class="profile-image" th:if="${#strings.isEmpty(user.profileImage)}" th:src="@{/icon/person-circle.svg}" alt="">
 
         <span class="profile-update-btn" th:if="${isOwner}">

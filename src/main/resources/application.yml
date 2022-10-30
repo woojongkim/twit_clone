@@ -30,11 +30,15 @@ logging:
     org:
       hibernate:
         SQL: debug
-#        type:
-#          descriptor:
-#            sql:
-#              BasicBinder: trace
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
 server:
-  tomcat:
-    max-http-form-post-size: 10MB
-    max-swallow-size: 10MB
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+storage:
+  host: http://192.168.0.14:8090/images/

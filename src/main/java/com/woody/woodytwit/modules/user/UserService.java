@@ -2,15 +2,19 @@ package com.woody.woodytwit.modules.user;
 
 import com.woody.woodytwit.infra.mail.EmailMessage;
 import com.woody.woodytwit.infra.mail.EmailService;
+import com.woody.woodytwit.modules.api.dto.ImageUploadRequestDto;
 import com.woody.woodytwit.modules.common.ImageUtils;
 import com.woody.woodytwit.modules.user.dto.ProfileUpdateDto;
 import com.woody.woodytwit.modules.user.dto.SignUpDto;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Service
@@ -34,6 +39,9 @@ public class UserService implements UserDetailsService {
   private final PasswordEncoder passwordEncoder;
 
   private final EmailService emailService;
+
+  @Value("${storage.host}")
+  private String storageHost;
 
   public User processNewUser(SignUpDto signUpDto) {
     User user = modelMapper.map(signUpDto, User.class);
@@ -96,14 +104,36 @@ public class UserService implements UserDetailsService {
     modelMapper.map(profileUpdateDto, user);
 
     if(StringUtils.hasText(profileUpdateDto.getBackgroundImage())){
-      user.setBackgroundImage(ImageUtils.resizeDataURI(profileUpdateDto.getBackgroundImage(), 650));
+      String backgroundImage = ImageUtils.resizeDataURI(profileUpdateDto.getBackgroundImage(), 650);
+      String fileName = UUID.randomUUID().toString();
+      saveImage(backgroundImage, fileName);
+      user.setBackgroundImage(fileName);
     }
 
     if(StringUtils.hasLength(profileUpdateDto.getProfileImage())){
-      user.setProfileImage(ImageUtils.resizeDataURI(profileUpdateDto.getProfileImage(), 200));
-      user.setProfileThumbnail(ImageUtils.resizeDataURI(profileUpdateDto.getProfileImage(), 50));
+      String profileImage = ImageUtils.resizeDataURI(profileUpdateDto.getProfileImage(), 200);
+      String profileThumbnail = ImageUtils.resizeDataURI(profileUpdateDto.getProfileImage(), 50);
+      String fileName = UUID.randomUUID().toString();
+      String thumbnailFileName = fileName + "_thumbnail";
+
+
+      saveImage(profileImage, fileName);
+      saveImage(profileThumbnail, thumbnailFileName);
+
+      user.setProfileImage(fileName);
+      user.setProfileThumbnail(thumbnailFileName);
     }
 
     userRepository.save(user);
+  }
+
+  private void saveImage(String dataUri, String fileName) {
+    ImageUploadRequestDto imageUploadRequestDto = ImageUploadRequestDto.builder().dataUri(
+        dataUri).fileName(
+        fileName).build();
+    RestTemplate restTemplate = new RestTemplate();
+    String url = storageHost;
+    HttpEntity<ImageUploadRequestDto> requestEntity = new HttpEntity<>(imageUploadRequestDto);
+    String post = restTemplate.postForObject(url, requestEntity, String.class);
   }
 }

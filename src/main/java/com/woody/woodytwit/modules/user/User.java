@@ -56,14 +56,10 @@ public class User {
 
   private String description;
 
-  @Lob
-  @Basic(fetch = FetchType.EAGER)
   private String backgroundImage;
 
-  @Lob @Basic(fetch = FetchType.EAGER)
   private String profileImage;
 
-  @Lob @Basic(fetch = FetchType.EAGER)
   private String profileThumbnail;
 
   public void generateEmailCheckToken() {
