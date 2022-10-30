@@ -21,7 +21,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -64,4 +64,9 @@ public class Tweet extends DeletableEntity {
 
   @ManyToOne
   private Tweet retweetTo;
+
+  public void addReply(Tweet tweet) {
+    this.replies.add(tweet);
+    this.replyCount++;
+  }
 }

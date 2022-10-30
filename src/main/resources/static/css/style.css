@@ -20,6 +20,10 @@ ul {
   margin: 0;
 }
 
+hr {
+  margin: 5px;
+}
+
 .wrapper {
   width: 100%;
   min-height: 100%;
@@ -179,6 +183,7 @@ ul {
   padding: 0 12px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 .tweet-article .user-info {
   display: flex;
@@ -216,7 +221,7 @@ ul {
 }
 .tweet-article .content {
   padding: 1rem 0;
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 .tweet-article .tweet-date {
@@ -237,47 +242,117 @@ ul {
 .tweet-article .tweet-count .description {
   color: #64686d;
 }
-.tweet-article .tweet-count .tweet-action {
+.tweet-article .tweet-action {
   list-style: none;
   display: flex;
   justify-content: space-around;
   padding: 0 12px;
 }
-.tweet-article .tweet-count .tweet-action li {
+.tweet-article .tweet-action li {
   font-size: 1.2rem;
   color: #64686d;
   border-radius: 50%;
-  padding: 5px 10px;
+  padding: 5px 7px;
 }
-.tweet-article .tweet-count .tweet-action li:hover {
+.tweet-article .tweet-action li:hover {
   color: #1a89d4;
   background-color: hsl(0deg, 0%, 17%);
 }
-.tweet-article .tweet-count .tweet-reply {
+.tweet-article .tweet-reply-form {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
   width: 100%;
   justify-content: space-between;
 }
-.tweet-article .tweet-count .tweet-reply img {
+.tweet-article .tweet-reply-form img {
   height: 48px;
   width: 48px;
   border-radius: 50%;
 }
-.tweet-article .tweet-count .tweet-reply .reply-form {
+.tweet-article .tweet-reply-form .reply-form {
   flex: 1;
   color: #64686d;
   font-size: 1.2rem;
 }
-.tweet-article .tweet-count .tweet-reply .reply-form:focus {
+.tweet-article .tweet-reply-form .reply-form:focus {
   color: #d6d9db;
 }
-.tweet-article .tweet-count .tweet-reply .btn {
+.tweet-article .tweet-reply-form .btn {
   padding: 0.5rem 0.8rem;
   border-radius: 100px;
   background-color: #375a7f;
   font-weight: bold;
+}
+
+/* tweet-reply */
+.reply-container {
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+}
+.reply-container .user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.reply-container .user-info img {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+}
+.reply-container .user-info .more {
+  color: #64686d;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 5px;
+  transition: 0.3s;
+}
+.reply-container .user-info .more:hover {
+  background-color: #64686d;
+  color: #000;
+}
+.reply-container .metadata a {
+  display: flex;
+  gap: 10px;
+  color: #d6d9db;
+  text-decoration: none;
+}
+.reply-container .metadata .nickname {
+  font-weight: bold;
+}
+.reply-container .metadata .username, .reply-container .metadata .replyDate {
+  color: #64686d;
+  font-size: 0.8rem;
+}
+.reply-container .content {
+  padding: 1rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.reply-container .tweet-action {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 12px;
+  font-size: 1rem;
+}
+.reply-container .tweet-action li {
+  color: #64686d;
+}
+.reply-container .tweet-action li i {
+  border-radius: 50%;
+  padding: 5px 5px;
+}
+.reply-container .tweet-action li .count {
+  font-size: 0.8rem;
+}
+.reply-container .tweet-action li:hover i {
+  background-color: hsl(0deg, 0%, 17%);
+  color: #1a89d4;
+}
+.reply-container .tweet-action li:hover .count {
+  color: #1a89d4;
 }
 
 .profile-follow-container {

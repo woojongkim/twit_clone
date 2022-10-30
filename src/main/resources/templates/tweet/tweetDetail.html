@@ -19,7 +19,9 @@
         <div class="name">스레드</div>
       </div>
     </section>
+
     <section class="tweet-article">
+      <input type="hidden" th:value="${tweet.id}" id="tweetId"/>
       <div class="user-info">
         <div class="metadata">
           <a href="#" th:href="'/user/'+${tweet.user.username}">
@@ -65,13 +67,53 @@
         </li>
       </div>
       <hr>
-      <div class="tweet-reply">
+      <div class="tweet-reply-form">
           <img src="../../static/img/profile.png" class="profile-reply" th:src="${currentUser.profileImage}" />
           <textarea id='reply-form' class="textarea reply-form" name="reply-form" placeholder="내 답글을 트윗합니다." rows=3></textarea>
-        <button class="btn" id="modal-tweet-btn">답글</button>
+        <button class="btn" id="reply-btn">답글</button>
       </div>
     </section>
+
     <hr>
+
+    <div class="tweet-replies" th:each="reply : ${replies}">
+      <section class="reply-container">
+        <div class="user-info">
+          <div class="metadata">
+            <a href="#" th:href="'/user/'+${reply.user.username}">
+              <img src="../../static/img/profile.png" th:src="${reply.user.profileImage}" />
+              <div class="info">
+                  <span class="nickname link-text" th:text="${reply.user.nickname}">우디</span>
+                  <span class="username" th:text="'@' + ${reply.user.username}">@Woody</span>
+                  <span class="replyDate">• 7시간</span>
+              </div>
+            </a>
+          </div>
+          <i class="more fa-solid fa-ellipsis"></i>
+        </div>
+
+        <div class="content" th:text="${reply.content}">this image but in 4k</div>
+        <div class="tweet-action">
+          <li class="replyCount">
+            <i class="fa-regular fa-comment"></i>
+            <span class="count" th:if="${reply.replyCount > 0}" th:text="${reply.replyCount}">10</span>
+          </li>
+          <li class="retweetCount">
+            <i class="fa-solid fa-retweet"></i>
+            <span class="count" th:if="${reply.retweetCount > 0}" th:text="${reply.retweetCount}">3</span>
+          </li>
+          <li class="likeCount">
+            <i class="fa-regular fa-heart"></i>
+            <span class="count" th:if="${reply.likeCount > 0}" th:text="${reply.likeCount}">3</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-share-from-square"></i>
+          </li>
+        </div>
+      </section>
+      <hr>
+    </div>
+
   </main>
 </div>
 
@@ -80,6 +122,28 @@
     const contentElement = document.getElementById('reply-form');
     const content = contentElement.value;
     contentElement.setAttribute('rows', Math.max(3, content.split("\n").length));
+  });
+
+  // if modal-tweet-btn clicked, post /tweet/{tweetId}/reply
+  document.getElementById('reply-btn').addEventListener('click', function () {
+    const tweetId = document.getElementById('tweetId').value;
+    const content = document.getElementById('reply-form').value;
+    const data = {
+      content: content
+    };
+    fetch("/tweets/"+tweetId+"/reply", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(function (response) {
+      if (response.ok) {
+        location.reload();
+      } else {
+        alert('답글을 작성할 수 없습니다.');
+      }
+    });
   });
 
 </script>
